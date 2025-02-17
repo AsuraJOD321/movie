@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../../middlewares");
+const validators_1 = require("../../validators");
+const guard_1 = require("../../middlewares/guard");
+const enum_1 = require("../../enum");
+const directorRoutes = (0, express_1.Router)();
+directorRoutes.get('/', (0, middlewares_1.exceptionHandler)(controllers_1.DirectorController.get));
+directorRoutes.post('/', (0, middlewares_1.exceptionHandler)(middlewares_1.validator.check(validators_1.createDirector)), (0, middlewares_1.exceptionHandler)(controllers_1.DirectorController.create));
+directorRoutes.patch('/:id', (0, middlewares_1.exceptionHandler)(guard_1.Guard.grantAccess), (0, middlewares_1.exceptionHandler)(guard_1.Guard.grantRole(enum_1.RoleEnum.admin)), (0, middlewares_1.exceptionHandler)(controllers_1.DirectorController.update));
+directorRoutes.delete('/:id', (0, middlewares_1.exceptionHandler)(controllers_1.DirectorController.delete));
+directorRoutes.get('/:id', (0, middlewares_1.exceptionHandler)(controllers_1.DirectorController.findOne));
+exports.default = directorRoutes;

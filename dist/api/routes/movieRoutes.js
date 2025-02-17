@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../../middlewares");
+const validators_1 = require("../../validators");
+const guard_1 = require("../../middlewares/guard");
+const enum_1 = require("../../enum");
+const movieRoutes = (0, express_1.Router)();
+movieRoutes.get('/', (0, middlewares_1.exceptionHandler)(controllers_1.movieController.get));
+movieRoutes.post('/', (0, middlewares_1.exceptionHandler)(guard_1.Guard.grantAccess), (0, middlewares_1.exceptionHandler)(guard_1.Guard.grantRole(enum_1.RoleEnum.admin)), (0, middlewares_1.exceptionHandler)(new middlewares_1.Multer().uploadSingle('file')), (0, middlewares_1.exceptionHandler)(middlewares_1.validator.check(validators_1.createMovie)), (0, middlewares_1.exceptionHandler)(controllers_1.movieController.create));
+movieRoutes.patch('/:id', (0, middlewares_1.exceptionHandler)(controllers_1.movieController.update));
+movieRoutes.delete('/:id', (0, middlewares_1.exceptionHandler)(controllers_1.movieController.delete));
+movieRoutes.get('/:id', (0, middlewares_1.exceptionHandler)(controllers_1.movieController.findOne));
+exports.default = movieRoutes;

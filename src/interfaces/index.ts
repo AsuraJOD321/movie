@@ -1,0 +1,5 @@
+export * from './genreInterface'
+export * from './directorInterface'
+export * from './movieinterfaces'
+export * from './userinterface'
+export * from './requestInterface'
